@@ -1,0 +1,47 @@
+<svg width="900" height="1200" viewBox="0 0 900 1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="g1" cx="50%" cy="20%" r="70%"><stop offset="0" stop-color="#C9961A" stop-opacity=".18"/><stop offset="1" stop-color="#0D0A08"/></radialGradient>
+    <radialGradient id="g2" cx="50%" cy="85%" r="50%"><stop offset="0" stop-color="#4A9EC8" stop-opacity=".32"/><stop offset="1" stop-color="#0D0A08" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="900" height="1200" fill="#0D0A08"/>
+  <rect x="18" y="18" width="864" height="1164" fill="none" stroke="#C9961A" stroke-opacity=".28" stroke-width="2"/>
+  <rect x="38" y="38" width="824" height="1124" fill="none" stroke="#C9961A" stroke-opacity=".12" stroke-width="2"/>
+  <ellipse cx="450" cy="250" rx="430" ry="420" fill="url(#g1)"/>
+  <ellipse cx="450" cy="1050" rx="380" ry="160" fill="url(#g2)"/>
+  <path d="M0 930 Q220 850 450 900 Q680 960 900 870 L900 1200 L0 1200Z" fill="#1A1208"/>
+  <path d="M450 480 L235 900 Q210 1000 235 1110 L665 1110 Q690 1000 665 900 Z" fill="#281b11" stroke="#3d2b1a" stroke-width="4"/>
+  <path d="M450 505 Q365 680 350 1040" stroke="#4b3622" stroke-opacity=".65" stroke-width="5" fill="none"/>
+  <path d="M450 510 Q540 690 550 1050" stroke="#4b3622" stroke-opacity=".5" stroke-width="5" fill="none"/>
+  <path d="M370 635 L530 635 L520 690 L380 690Z" fill="#4A3520"/>
+  <circle cx="450" cy="665" r="27" fill="none" stroke="#C9961A" stroke-width="5" opacity=".75"/>
+  <circle cx="450" cy="665" r="12" fill="#C9961A" opacity=".55"/>
+  <path d="M640 690 Q740 740 790 860 Q805 900 760 940" stroke="#24170f" stroke-width="55" stroke-linecap="round" fill="none"/>
+  <path d="M765 940 Q815 860 865 720" stroke="#4A3520" stroke-width="24" stroke-linecap="round" fill="none"/>
+  <path d="M858 728 L880 655 L898 728Z" fill="#C4B89A" opacity=".85"/>
+  <ellipse cx="880" cy="655" rx="26" ry="26" fill="#4A9EC8" opacity=".28"/>
+  <ellipse cx="880" cy="655" rx="11" ry="11" fill="#7ECDE8" opacity=".6"/>
+  <path d="M260 700 Q160 750 125 870 Q112 910 150 950" stroke="#24170f" stroke-width="55" stroke-linecap="round" fill="none"/>
+  <rect x="112" y="890" width="75" height="100" rx="12" fill="#3A2418"/>
+  <line x1="128" y1="920" x2="172" y2="920" stroke="#C9961A" stroke-opacity=".55" stroke-width="3"/>
+  <line x1="128" y1="948" x2="172" y2="948" stroke="#C9961A" stroke-opacity=".45" stroke-width="3"/>
+  <rect x="420" y="365" width="60" height="100" rx="12" fill="#3A2418"/>
+  <ellipse cx="450" cy="300" rx="95" ry="110" fill="#3A2418"/>
+  <path d="M350 210 H550 V285 H350Z" fill="#241A10"/>
+  <path d="M335 195 H565 V225 H335Z" fill="#1E1610"/>
+  <path d="M375 155 H525 V200 H375Z" fill="#2A1E12"/>
+  <circle cx="410" cy="180" r="22" fill="#1E4A6E" stroke="#C9961A" stroke-width="5" opacity=".85"/>
+  <circle cx="490" cy="180" r="22" fill="#1E4A6E" stroke="#C9961A" stroke-width="5" opacity=".85"/>
+  <line x1="432" y1="180" x2="468" y2="180" stroke="#C9961A" stroke-width="4"/>
+  <path d="M395 310 Q420 297 442 305" stroke="#150c07" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <path d="M458 305 Q485 296 510 310" stroke="#150c07" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <ellipse cx="415" cy="325" rx="22" ry="12" fill="#120a06"/>
+  <ellipse cx="485" cy="325" rx="22" ry="12" fill="#120a06"/>
+  <circle cx="420" cy="320" r="4" fill="#7ECDE8" opacity=".7"/>
+  <circle cx="490" cy="320" r="4" fill="#7ECDE8" opacity=".7"/>
+  <path d="M450 335 Q435 370 455 375 Q472 372 450 335Z" fill="#2E1C10"/>
+  <path d="M405 385 Q450 410 495 385" stroke="#1d120b" stroke-width="14" stroke-linecap="round"/>
+  <path d="M370 430 Q450 470 530 430 L505 500 Q450 530 395 500Z" fill="#2A1E14"/>
+  <path d="M390 945 Q410 1010 390 1100" stroke="#4A9EC8" stroke-width="4" opacity=".5" fill="none"/>
+  <path d="M515 945 Q530 1015 510 1110" stroke="#4A9EC8" stroke-width="4" opacity=".45" fill="none"/>
+  <text x="450" y="1160" text-anchor="middle" fill="#C9961A" fill-opacity=".42" font-family="Cinzel, serif" font-size="28" letter-spacing="8">CONCEPT ART</text>
+</svg>
