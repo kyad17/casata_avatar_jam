@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avaroa: El Corazón del Litoral</title>
+  <meta name="description" content="Landing page conceptual del videojuego Avaroa: El Corazón del Litoral, una aventura steampunk inspirada en Eduardo Abaroa." />
+
+  <!-- Fuentes: si no hay internet, el navegador usará las fuentes de respaldo. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+  <div class="page-grain" aria-hidden="true"></div>
+
+  <header class="site-header" id="top">
+    <nav class="navbar container" aria-label="Navegación principal">
+      <a href="#inicio" class="brand" aria-label="Ir al inicio">
+        <span class="brand-mark">◆</span>
+        <span>Avaroa</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#historia">Historia</a></li>
+        <li><a href="#personaje">Personaje</a></li>
+        <li><a href="#mecanicas">Mecánicas</a></li>
+        <li><a href="#mundo">Mundo</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#contacto" class="nav-cta">Próximamente</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+      <div class="hero-bg"></div>
+      <div class="hero-map-lines" aria-hidden="true"></div>
+      <div class="gear gear-left parallax" data-depth="0.02" aria-hidden="true"></div>
+      <div class="gear gear-right parallax" data-depth="0.04" aria-hidden="true"></div>
+      <div class="gear gear-small parallax" data-depth="0.08" aria-hidden="true"></div>
+
+      <div class="floating-relic relic-goggles parallax" data-depth="0.06" aria-hidden="true">
+        <span></span><span></span><i></i>
+      </div>
+      <div class="floating-relic relic-compass parallax" data-depth="0.05" aria-hidden="true">✧</div>
+
+      <div class="steam-field" aria-hidden="true">
+        <span style="--x:8%;--dur:9s;--delay:0s"></span>
+        <span style="--x:17%;--dur:11s;--delay:2s"></span>
+        <span style="--x:31%;--dur:8s;--delay:1s"></span>
+        <span style="--x:45%;--dur:12s;--delay:3s"></span>
+        <span style="--x:57%;--dur:10s;--delay:.5s"></span>
+        <span style="--x:68%;--dur:9s;--delay:4s"></span>
+        <span style="--x:79%;--dur:13s;--delay:1.5s"></span>
+        <span style="--x:92%;--dur:10s;--delay:2.8s"></span>
+      </div>
+
+      <div class="battle-line battle-line-back" aria-hidden="true">
+        <span class="soldier s1"></span>
+        <span class="soldier s2"></span>
+        <span class="soldier s3"></span>
+        <span class="soldier s4"></span>
+      </div>
+      <div class="battle-line battle-line-front" aria-hidden="true">
+        <span class="soldier s5"></span>
+        <span class="soldier s6"></span>
+        <span class="soldier s7"></span>
+      </div>
+
+      <div class="container hero-content reveal">
+        <p class="eyebrow">Bolivia Steampunk · 1879</p>
+        <h1>Avaroa</h1>
+        <div class="title-divider">
+          <span></span><i></i><strong>El Corazón del Litoral</strong><i></i><span></span>
+        </div>
+        <p class="hero-description">
+          En las profundidades del desierto andino duerme una energía antigua. Cuando el imperio de acero llegue a robarla, un solo guardián se interpondrá entre ellos y la memoria del litoral boliviano.
+        </p>
+        <div class="hero-actions">
+          <a href="#historia" class="btn btn-primary">Descubrir historia</a>
+          <a href="#galeria" class="btn btn-secondary">Ver concept art</a>
+        </div>
+      </div>
+
+      <a class="scroll-hint" href="#historia" aria-label="Bajar a la historia">
+        <span>Explorar</span>
+        <b></b>
+      </a>
+    </section>
+
+    <!-- HISTORIA -->
+    <section class="section story-section" id="historia">
+      <div class="section-smoke" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">El mundo</span>
+          <h2>Una Bolivia que pudo ser</h2>
+          <div class="ornament"><span></span><i></i><span></span></div>
+        </div>
+
+        <div class="story-grid">
+          <article class="story-text reveal">
+            <p class="lead">
+              El año es 1879. En una Bolivia alternativa, las ciudades del desierto laten con motores de vapor, trenes blindados y máquinas mineras gigantes.
+            </p>
+            <p>
+              Bajo Calama se descubre el <strong>Vapor Azul</strong>, una energía capaz de alimentar ciudades enteras y despertar mecanismos antiguos que llevan siglos dormidos bajo la arena.
+            </p>
+            <p>
+              Cuando un ejército industrial avanza con autómatas y soldados blindados, Eduardo Avaroa descubre que Calama no es solo un punto estratégico: es la entrada al <em>Corazón del Litoral</em>, una máquina subterránea que podría cambiar el destino del continente.
+            </p>
+            <div class="lore-chips" aria-label="Datos del mapa">
+              <span>Calama</span>
+              <span>Litoral</span>
+              <span>Vapor Azul</span>
+            </div>
+          </article>
+
+          <aside class="map-card reveal tilt-card" aria-label="Mapa del Litoral y zona de Calama">
+            <div class="map-frame">
+              <img src="assets/img/mapa_litoral.png" alt="Mapa antiguo del Litoral, Calama, Antofagasta, Tarapacá, Chile, Perú y Bolivia" />
+              <span class="map-pin pin-calama"><b></b>Calama</span>
+              <span class="map-pin pin-litoral"><b></b>Corazón del Litoral</span>
+            </div>
+            <div class="map-caption">
+              <strong>Mapa estratégico del Litoral</strong>
+              <span>La ruta donde empieza la historia de Calama.</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERSONAJE -->
+    <section class="section character-section" id="personaje">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">El guardián</span>
+          <h2>Eduardo Abaroa</h2>
+          <div class="ornament"><span></span><i></i><span></span></div>
+        </div>
+
+        <div class="character-grid">
+          <div class="portrait-panel reveal">
+            <div class="portrait-frame tilt-card">
+              <img src="assets/img/eduardo_avaroa.png" alt="Ilustración steampunk de Eduardo Abaroa con lentes, capa y fusil" />
+              <div class="portrait-glow" aria-hidden="true"></div>
+            </div>
+            <div class="character-stats">
+              <div><small>Rango</small><strong>Guardián</strong></div>
+              <div><small>Arma</small><strong>Fusil-lanza</strong></div>
+              <div><small>Rol</small><strong>Ingeniero</strong></div>
+              <div><small>Misión</small><strong>Defender Calama</strong></div>
+            </div>
+          </div>
+
+          <article class="character-info reveal">
+            <h3>El último defensor del desierto</h3>
+            <p class="role">Ingeniero · Explorador · Combatiente</p>
+            <blockquote>
+              “No defiendo solo una ciudad. Defiendo la memoria de un pueblo.”
+            </blockquote>
+            <p>
+              Abaroa no buscaba convertirse en leyenda. Antes de la guerra reparaba máquinas, estudiaba tecnologías antiguas y protegía a su comunidad desde el silencio.
+            </p>
+            <p>
+              Cuando Calama queda en peligro, toma su capa reforzada, sus guantes de mecánico y el fusil-lanza que él mismo construyó. Su fuerza no está solo en sus armas, sino en su decisión de no rendirse.
+            </p>
+
+            <div class="equipment-list">
+              <div class="equipment-item tilt-card">
+                <span>⚙</span>
+                <div><strong>Fusil-lanza de vapor</strong><p>Sirve como rifle, lanza y herramienta para activar mecanismos antiguos.</p></div>
+              </div>
+              <div class="equipment-item tilt-card">
+                <span>◈</span>
+                <div><strong>Capa andina reforzada</strong><p>Tejido con piezas de cobre para resistir chispas, arena y esquirlas.</p></div>
+              </div>
+              <div class="equipment-item tilt-card">
+                <span>✦</span>
+                <div><strong>Guantes de Vapor Azul</strong><p>Permiten manipular energía inestable sin destruir los mecanismos.</p></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="battle-strip" aria-label="Escena decorativa de batalla">
+      <div class="container battle-strip-inner">
+        <span>⚙</span>
+        <p>Autómatas, soldados y trenes blindados avanzan sobre el desierto.</p>
+        <span>⚔</span>
+      </div>
+      <div class="marchers" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+    </section>
+
+    <!-- MECÁNICAS -->
+    <section class="section features-section" id="mecanicas">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Mecánicas</span>
+          <h2>Lo que te espera</h2>
+          <div class="ornament"><span></span><i></i><span></span></div>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card reveal tilt-card">
+            <span class="feature-icon">⚔</span>
+            <h3>Combate steampunk</h3>
+            <p>Usa el fusil-lanza de vapor con ataques a distancia, cuerpo a cuerpo y golpes cargados con Vapor Azul.</p>
+          </article>
+          <article class="feature-card reveal tilt-card">
+            <span class="feature-icon">⌘</span>
+            <h3>Ruinas subterráneas</h3>
+            <p>Explora túneles bajo Calama, resuelve mecanismos y descubre la tecnología perdida del litoral.</p>
+          </article>
+          <article class="feature-card reveal tilt-card">
+            <span class="feature-icon">◆</span>
+            <h3>Rescate de civiles</h3>
+            <p>Evacúa personas, protege rutas y toma decisiones que cambian el desenlace de la defensa.</p>
+          </article>
+          <article class="feature-card reveal tilt-card">
+            <span class="feature-icon">▣</span>
+            <h3>Sabotaje de autómatas</h3>
+            <p>Desactiva soldados mecánicos, trenes blindados y fábricas enemigas desde el interior.</p>
+          </article>
+          <article class="feature-card reveal tilt-card">
+            <span class="feature-icon">✧</span>
+            <h3>Gestión de vapor</h3>
+            <p>Administra energía para armas, reparaciones y habilidades especiales durante el combate.</p>
+          </article>
+          <article class="feature-card reveal tilt-card">
+            <span class="feature-icon">☉</span>
+            <h3>Historia con decisiones</h3>
+            <p>Escoge entre salvar recursos, proteger civiles o destruir máquinas. Cada acción deja huella.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- MUNDO -->
+    <section class="section world-section" id="mundo">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Escenarios</span>
+          <h2>El mundo del juego</h2>
+          <div class="ornament"><span></span><i></i><span></span></div>
+        </div>
+
+        <div class="world-panels">
+          <article class="world-panel reveal tilt-card">
+            <small>01</small>
+            <h3>Calama de vapor</h3>
+            <p>Calles de adobe, tuberías de cobre, humo industrial y talleres ocultos bajo la ciudad.</p>
+          </article>
+          <article class="world-panel reveal tilt-card">
+            <small>02</small>
+            <h3>Desierto de hierro</h3>
+            <p>Trenes blindados, tormentas de arena, autómatas perdidos y maquinaria oxidada.</p>
+          </article>
+          <article class="world-panel reveal tilt-card">
+            <small>03</small>
+            <h3>Corazón del Litoral</h3>
+            <p>Una máquina antigua capaz de controlar el agua, el vapor y el destino de la región.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERÍA CON ESPACIO PARA FOTOS -->
+    <section class="section gallery-section" id="galeria">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Concept art</span>
+          <h2>Galería del proyecto</h2>
+          <div class="ornament"><span></span><i></i><span></span></div>
+          <p class="section-description">
+            Aquí están reemplazadas las imágenes básicas por el escenario, fusil y boceto reales. El botón permite previsualizar fotos desde tu computadora, sin subirlas a internet.
+          </p>
+        </div>
+
+        <div class="gallery-layout">
+          <div class="upload-box reveal">
+            <input type="file" id="photoInput" accept="image/*" multiple hidden />
+            <button class="upload-button" id="uploadButton" type="button">
+              <span>＋</span>
+              Agregar fotografías
+            </button>
+            <p>Formatos recomendados: JPG, PNG o WEBP. Puedes seleccionar varias imágenes.</p>
+          </div>
+
+          <div class="gallery-grid" id="galleryGrid">
+            <article class="gallery-item reveal tall-card">
+              <button class="gallery-open" type="button" aria-label="Abrir boceto del personaje">
+                <img src="assets/img/boceto_personaje.jpeg" alt="Boceto del personaje dibujado en líneas rojas" />
+              </button>
+              <div><strong>Boceto del personaje</strong><span>Dibujo base en rojo para el modelado y diseño del héroe.</span></div>
+            </article>
+            <article class="gallery-item reveal wide-card">
+              <button class="gallery-open" type="button" aria-label="Abrir escenario de Calama">
+                <img src="assets/img/escenario_calama.png" alt="Escenario costero steampunk inspirado en Calama y el Litoral" />
+              </button>
+              <div><strong>Escenario de Calama</strong><span>Ambiente amplio con costa, montañas, máquinas y estilo de videojuego.</span></div>
+            </article>
+            <article class="gallery-item reveal weapon-card">
+              <button class="gallery-open" type="button" aria-label="Abrir fusil-lanza steampunk">
+                <img src="assets/img/fusil_lanza.png" alt="Fusil-lanza steampunk de cobre y madera con vapor azul" />
+              </button>
+              <div><strong>Fusil-lanza</strong><span>Arma principal del protagonista, mostrada completa sin recortes.</span></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CITA / LORE -->
+    <section class="lore-section">
+      <div class="container">
+        <article class="lore-scroll reveal tilt-card">
+          <p class="lore-label">Archivo del desierto</p>
+          <p class="lore-text">
+            “Cuando el desierto arde y las máquinas despiertan, no vence quien tiene más hierro, sino quien todavía recuerda por qué lucha.”
+          </p>
+          <p class="lore-author">— Crónica del Vapor Azul</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACTO / CTA -->
+    <section class="cta-section" id="contacto">
+      <div class="cta-cog" aria-hidden="true"></div>
+      <div class="container cta-inner reveal">
+        <h2>Próximamente</h2>
+        <p>Una leyenda histórica reinterpretada entre cobre, humo, honor y Vapor Azul.</p>
+        <form class="notify-form" id="notifyForm">
+          <input type="email" id="emailInput" placeholder="tu.correo@ejemplo.com" aria-label="Correo electrónico" />
+          <button type="submit">Notificarme</button>
+        </form>
+        <p class="form-message" id="formMessage" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-logo">Avaroa</p>
+      <p>Proyecto académico conceptual · Videojuego steampunk inspirado en Eduardo Abaroa</p>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Cerrar imagen">×</button>
+    <img id="lightboxImage" src="" alt="Imagen ampliada de la galería" />
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
