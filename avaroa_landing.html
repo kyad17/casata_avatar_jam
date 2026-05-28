@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avaroa: El Corazón del Litoral</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #C9961A;
+    --gold-light: #E8B84B;
+    --gold-pale: #F5D98A;
+    --copper: #B5612A;
+    --copper-dark: #7A3D18;
+    --rust: #8B3A1E;
+    --steam: #C4B89A;
+    --steam-light: #EDE5D0;
+    --smoke: #4A4035;
+    --dark: #1A1410;
+    --darker: #0D0A08;
+    --blue-vapor: #1E4A6E;
+    --blue-light: #4A9EC8;
+    --blue-glow: #7ECDE8;
+    --sand: #D4A843;
+    --parchment: #F0E6C8;
+    --ink: #1E1812;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--darker);
+    color: var(--steam-light);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.3;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 60px 20px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 110%, #1E4A6E33 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 50% -10%, #C9961A22 0%, transparent 55%),
+      radial-gradient(ellipse 100% 80% at 50% 50%, #2A1F0E 0%, #0D0A08 100%);
+    z-index: 0;
+  }
+
+  /* ANIMATED GEAR SVG decorations */
+  .gear-deco {
+    position: absolute;
+    opacity: 0.06;
+    z-index: 0;
+  }
+  .gear-deco.left { left: -120px; top: 20%; animation: spin-slow 60s linear infinite; }
+  .gear-deco.right { right: -100px; top: 40%; animation: spin-slow 45s linear infinite reverse; }
+  .gear-deco.top-right { right: 5%; top: 5%; animation: spin-slow 80s linear infinite; }
+
+  @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  /* STEAM PARTICLES */
+  .steam-container {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .steam-puff {
+    position: absolute;
+    bottom: 0;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(196, 184, 154, 0.15);
+    animation: rise var(--dur, 8s) ease-out var(--del, 0s) infinite;
+    transform-origin: bottom center;
+  }
+
+  @keyframes rise {
+    0% { transform: translateY(0) scale(1); opacity: 0.3; }
+    50% { transform: translateY(-200px) scale(6); opacity: 0.1; }
+    100% { transform: translateY(-400px) scale(12); opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 900px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeDown 0.8s ease forwards 0.3s;
+  }
+
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(48px, 9vw, 96px);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--gold-pale);
+    text-shadow:
+      0 0 60px rgba(201, 150, 26, 0.4),
+      0 0 120px rgba(201, 150, 26, 0.15),
+      2px 4px 0 rgba(0,0,0,0.8);
+    opacity: 0;
+    animation: fadeDown 1s ease forwards 0.5s;
+  }
+
+  .hero-subtitle-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    margin: 20px 0;
+    opacity: 0;
+    animation: fadeDown 0.8s ease forwards 0.8s;
+  }
+
+  .divider-line {
+    flex: 1;
+    max-width: 120px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-light));
+  }
+  .divider-line.right { background: linear-gradient(to left, transparent, var(--gold-light)); }
+
+  .divider-gem {
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    box-shadow: 0 0 12px rgba(201, 150, 26, 0.6);
+  }
+
+  .hero-sub {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(14px, 2.5vw, 20px);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--steam);
+    opacity: 0;
+    animation: fadeDown 0.8s ease forwards 0.8s;
+  }
+
+  .hero-description {
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--steam-light);
+    max-width: 600px;
+    margin: 32px auto;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeDown 0.8s ease forwards 1.1s;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    opacity: 0;
+    animation: fadeDown 0.8s ease forwards 1.4s;
+  }
+
+  .btn-primary {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    clip-path: polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0% calc(100% - 8px), 0% 8px);
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-pale);
+    box-shadow: 0 0 30px rgba(201, 150, 26, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 15px 40px;
+    background: transparent;
+    color: var(--steam-light);
+    border: 1px solid rgba(196, 184, 154, 0.4);
+    cursor: pointer;
+    text-decoration: none;
+    clip-path: polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0% calc(100% - 8px), 0% 8px);
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--gold);
+    color: var(--gold-pale);
+    transform: translateY(-2px);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeDown 0.8s ease forwards 2s;
+  }
+
+  .scroll-hint span {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(196, 184, 154, 0.5);
+  }
+
+  .scroll-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 1px solid rgba(201, 150, 26, 0.5);
+    border-bottom: 1px solid rgba(201, 150, 26, 0.5);
+    transform: rotate(45deg);
+    animation: bounce 2s ease infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); }
+    50% { transform: rotate(45deg) translateY(6px); }
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION BASE */
+  section { position: relative; z-index: 1; }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .section-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    color: var(--gold-pale);
+    text-shadow: 0 0 40px rgba(201, 150, 26, 0.2);
+  }
+
+  .section-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .section-line::before, .section-line::after {
+    content: '◆';
+    font-size: 6px;
+    color: var(--gold);
+    opacity: 0.6;
+  }
+
+  .section-line-bar {
+    height: 1px;
+    width: 80px;
+    background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+  }
+
+  /* STORY SECTION */
+  .story-section {
+    padding: 100px 20px;
+    background: linear-gradient(180deg, var(--darker) 0%, #1A1208 50%, var(--darker) 100%);
+  }
+
+  .story-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .story-text .lead {
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(17px, 2vw, 21px);
+    color: var(--steam-light);
+    line-height: 1.9;
+    margin-bottom: 24px;
+  }
+
+  .story-text p {
+    font-size: 16px;
+    color: rgba(196, 184, 154, 0.8);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .story-illustration {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .story-illustration svg {
+    max-width: 420px;
+    width: 100%;
+    filter: drop-shadow(0 0 40px rgba(201, 150, 26, 0.12));
+  }
+
+  /* FEATURES / ELEMENTS */
+  .features-section {
+    padding: 100px 20px;
+    background: var(--darker);
+  }
+
+  .features-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2px;
+  }
+
+  .feature-card {
+    background: #1A1410;
+    padding: 40px 32px;
+    border: 1px solid rgba(201, 150, 26, 0.12);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .feature-card:hover { background: #1E1810; border-color: rgba(201, 150, 26, 0.3); }
+  .feature-card:hover::before { opacity: 1; }
+
+  .feature-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+
+  .feature-title {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-pale);
+    margin-bottom: 12px;
+  }
+
+  .feature-text {
+    font-size: 15px;
+    color: rgba(196, 184, 154, 0.75);
+    line-height: 1.7;
+  }
+
+  /* CHARACTER SECTION */
+  .character-section {
+    padding: 100px 20px;
+    background: linear-gradient(180deg, var(--darker) 0%, #12100B 50%, var(--darker) 100%);
+    overflow: hidden;
+  }
+
+  .character-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .character-portrait {
+    position: relative;
+  }
+
+  .portrait-frame {
+    position: relative;
+    padding: 20px;
+    border: 1px solid rgba(201, 150, 26, 0.25);
+  }
+
+  .portrait-frame::before {
+    content: '';
+    position: absolute;
+    top: 8px; left: 8px; right: 8px; bottom: 8px;
+    border: 1px solid rgba(201, 150, 26, 0.12);
+  }
+
+  .portrait-corner {
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--gold);
+    border-style: solid;
+    opacity: 0.6;
+  }
+  .portrait-corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .portrait-corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+  .portrait-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+  .portrait-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+  .character-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .stat-item {
+    padding: 16px;
+    background: rgba(201, 150, 26, 0.06);
+    border: 1px solid rgba(201, 150, 26, 0.15);
+  }
+
+  .stat-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .stat-value {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    color: var(--steam-light);
+  }
+
+  .character-info h3 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 700;
+    color: var(--gold-pale);
+    margin-bottom: 8px;
+  }
+
+  .character-role {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .character-quote {
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-style: italic;
+    color: var(--steam-light);
+    border-left: 3px solid var(--gold);
+    padding-left: 24px;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  .character-bio p {
+    font-size: 16px;
+    color: rgba(196, 184, 154, 0.8);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .equipment-list {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .equipment-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    background: rgba(201, 150, 26, 0.04);
+    border: 1px solid rgba(201, 150, 26, 0.1);
+    border-left: 3px solid var(--gold);
+    transition: all 0.3s ease;
+  }
+
+  .equipment-item:hover {
+    background: rgba(201, 150, 26, 0.08);
+    border-left-color: var(--gold-light);
+  }
+
+  .equipment-icon { color: var(--gold); font-size: 18px; flex-shrink: 0; }
+
+  .equipment-name {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    color: var(--steam-light);
+    font-weight: 600;
+  }
+
+  .equipment-desc {
+    font-size: 13px;
+    color: rgba(196, 184, 154, 0.6);
+    margin-top: 2px;
+  }
+
+  /* WORLD SECTION */
+  .world-section {
+    padding: 100px 20px;
+    background: var(--darker);
+  }
+
+  .world-panels {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .world-panel {
+    position: relative;
+    padding: 48px 32px 40px;
+    background: #141008;
+    border: 1px solid rgba(201, 150, 26, 0.1);
+    overflow: hidden;
+  }
+
+  .world-panel::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  .world-panel-number {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: rgba(201, 150, 26, 0.05);
+    position: absolute;
+    top: 20px; right: 20px;
+    line-height: 1;
+  }
+
+  .world-panel-icon {
+    width: 48px; height: 48px;
+    margin-bottom: 20px;
+  }
+
+  .world-panel h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold-pale);
+    margin-bottom: 12px;
+  }
+
+  .world-panel p {
+    font-size: 15px;
+    color: rgba(196, 184, 154, 0.75);
+    line-height: 1.7;
+  }
+
+  /* LORE SCROLL */
+  .lore-section {
+    padding: 80px 20px;
+    background: linear-gradient(180deg, var(--darker) 0%, #0F0C08 50%, var(--darker) 100%);
+  }
+
+  .lore-scroll {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #1A1610;
+    border: 1px solid rgba(201, 150, 26, 0.2);
+    padding: 56px 64px;
+    position: relative;
+  }
+
+  .lore-scroll::before, .lore-scroll::after {
+    content: '';
+    position: absolute;
+    left: -1px; right: -1px;
+    height: 8px;
+    background: linear-gradient(to right, transparent, rgba(201, 150, 26, 0.3), transparent);
+  }
+  .lore-scroll::before { top: -1px; }
+  .lore-scroll::after { bottom: -1px; }
+
+  .lore-title {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .lore-text {
+    font-family: 'IM Fell English', serif;
+    font-size: 18px;
+    color: var(--steam-light);
+    line-height: 2;
+    text-align: center;
+    font-style: italic;
+  }
+
+  .lore-attribution {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(201, 150, 26, 0.6);
+    text-align: right;
+    margin-top: 24px;
+  }
+
+  /* FINAL CTA */
+  .cta-section {
+    padding: 120px 20px;
+    text-align: center;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, #1E2A0E 0%, var(--darker) 70%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 150, 26, 0.06);
+  }
+
+  .cta-section::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px; height: 900px;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 150, 26, 0.03);
+  }
+
+  .cta-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    color: var(--gold-pale);
+    text-shadow: 0 0 40px rgba(201, 150, 26, 0.3);
+    margin-bottom: 16px;
+  }
+
+  .cta-text {
+    font-family: 'IM Fell English', serif;
+    font-size: 20px;
+    color: var(--steam);
+    margin-bottom: 40px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .notify-form {
+    display: flex;
+    gap: 0;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .notify-input {
+    flex: 1;
+    padding: 15px 20px;
+    background: rgba(201, 150, 26, 0.06);
+    border: 1px solid rgba(201, 150, 26, 0.3);
+    border-right: none;
+    color: var(--steam-light);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+    clip-path: polygon(8px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 8px);
+  }
+
+  .notify-input:focus { border-color: rgba(201, 150, 26, 0.6); }
+  .notify-input::placeholder { color: rgba(196, 184, 154, 0.35); }
+
+  .notify-btn {
+    padding: 15px 28px;
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    font-family: 'Cinzel', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    clip-path: polygon(0% 0%, calc(100% - 8px) 0%, 100% 8px, 100% 100%, 0% 100%);
+    transition: background 0.3s ease;
+  }
+
+  .notify-btn:hover { background: var(--gold-pale); }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(13,10,8,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(4px);
+  }
+
+  .nav-logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 20px rgba(201, 150, 26, 0.4);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(196, 184, 154, 0.7);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold-light); }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 20px;
+    border-top: 1px solid rgba(201, 150, 26, 0.1);
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: rgba(201, 150, 26, 0.4);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  .footer-text {
+    font-size: 13px;
+    color: rgba(196, 184, 154, 0.3);
+    letter-spacing: 0.1em;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .story-grid, .character-inner { grid-template-columns: 1fr; gap: 40px; }
+    .world-panels { grid-template-columns: 1fr; }
+    .character-portrait { max-width: 400px; margin: 0 auto; }
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .lore-scroll { padding: 36px 28px; }
+    .notify-form { flex-direction: column; }
+    .notify-input { border-right: 1px solid rgba(201, 150, 26, 0.3); clip-path: none; }
+    .notify-btn { clip-path: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Avaroa</a>
+  <ul class="nav-links">
+    <li><a href="#historia">Historia</a></li>
+    <li><a href="#personaje">Personaje</a></li>
+    <li><a href="#mundo">El Mundo</a></li>
+    <li><a href="#notificar">Notificarme</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <!-- Gears -->
+  <svg class="gear-deco left" width="500" height="500" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#C9961A" d="M50 5l5 10h10l-8 8 3 11-10-5-10 5 3-11-8-8h10zm0 0v-5m0 95l5-10h10l-8-8 3-11-10 5-10-5 3 11-8 8h10zm45-45l-10 5v10l-8-8-11 3 5-10-5-10 11 3 8-8v10zm-90 0l10 5v10l8-8 11 3-5-10 5-10-11 3-8-8v10z"/>
+    <circle cx="50" cy="50" r="20" fill="none" stroke="#C9961A" stroke-width="3"/>
+    <circle cx="50" cy="50" r="8" fill="#C9961A"/>
+  </svg>
+
+  <svg class="gear-deco right" width="400" height="400" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#B5612A" d="M50 5l5 10h10l-8 8 3 11-10-5-10 5 3-11-8-8h10zm0 90l5-10h10l-8-8 3-11-10 5-10-5 3 11-8 8h10zm45-45l-10 5v10l-8-8-11 3 5-10-5-10 11 3 8-8v10zm-90 0l10 5v10l8-8 11 3-5-10 5-10-11 3-8-8v10z"/>
+    <circle cx="50" cy="50" r="25" fill="none" stroke="#B5612A" stroke-width="2"/>
+    <circle cx="50" cy="50" r="10" fill="#B5612A"/>
+  </svg>
+
+  <!-- Steam particles -->
+  <div class="steam-container">
+    <div class="steam-puff" style="left:15%;--dur:9s;--del:0s;"></div>
+    <div class="steam-puff" style="left:28%;--dur:11s;--del:2s;"></div>
+    <div class="steam-puff" style="left:42%;--dur:8s;--del:1s;"></div>
+    <div class="steam-puff" style="left:55%;--dur:12s;--del:3s;"></div>
+    <div class="steam-puff" style="left:68%;--dur:10s;--del:0.5s;"></div>
+    <div class="steam-puff" style="left:80%;--dur:9s;--del:4s;"></div>
+    <div class="steam-puff" style="left:90%;--dur:13s;--del:1.5s;"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Bolivia Steampunk · 1879</div>
+    <h1 class="hero-title">Avaroa</h1>
+    <div class="hero-subtitle-divider">
+      <div class="divider-line"></div>
+      <div class="divider-gem"></div>
+      <span class="hero-sub">El Corazón del Litoral</span>
+      <div class="divider-gem"></div>
+      <div class="divider-line right"></div>
+    </div>
+    <p class="hero-description">
+      En las profundidades del desierto andino duerme una energía antigua. Cuando el empire de acero llegue a robarla, un solo hombre se interpondrá entre ellos y el litoral boliviano.
+    </p>
+    <div class="hero-cta-group">
+      <a href="#historia" class="btn-primary">Descubrir la Historia</a>
+      <a href="#notificar" class="btn-secondary">Recibir Novedades</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Explorar</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- STORY SECTION -->
+<section class="story-section" id="historia">
+  <div class="section-header">
+    <span class="section-label">El Mundo</span>
+    <h2 class="section-title">Una Bolivia que pudo ser</h2>
+    <div class="section-line">
+      <div class="section-line-bar"></div>
+      <div class="divider-gem"></div>
+      <div class="section-line-bar"></div>
+    </div>
+  </div>
+
+  <div class="story-grid">
+    <div class="story-text">
+      <p class="lead">El año es 1879. En una Bolivia alternativa, las ciudades del desierto pulsan con el rugido de motores de vapor, trenes blindados y máquinas mineras gigantes.</p>
+      <p>Bajo Calama se ha descubierto algo que ningún libro de historia registra: el Vapor Azul, una energía antigua capaz de alimentar ciudades enteras, forjar armas imposibles y despertar máquinas que llevan siglos dormidas bajo la arena.</p>
+      <p>Cuando un imperio industrial lanza su ofensiva de autómatas y soldados mecánicos, una verdad más profunda emerge: Calama no es sólo un punto estratégico. Es la puerta de entrada a <em>El Corazón del Litoral</em>, una red subterránea de tecnología perdida capaz de cambiar el destino del continente.</p>
+    </div>
+
+    <!-- Ilustración SVG del mundo -->
+    <div class="story-illustration">
+      <svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
+        <!-- Sky with vapor blue tint -->
+        <defs>
+          <radialGradient id="skyGrad" cx="50%" cy="20%" r="70%">
+            <stop offset="0%" stop-color="#1E4A6E" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#0D0A08" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="glowBlue" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#4A9EC8" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#4A9EC8" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="glowGold" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#C9961A" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#C9961A" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <rect width="400" height="420" fill="#0D0A08"/>
+        <ellipse cx="200" cy="60" rx="280" ry="120" fill="url(#skyGrad)"/>
+
+        <!-- Stars -->
+        <circle cx="40" cy="30" r="1" fill="#E8D9B0" opacity="0.8"/>
+        <circle cx="90" cy="15" r="1.5" fill="#E8D9B0" opacity="0.6"/>
+        <circle cx="160" cy="25" r="1" fill="#E8D9B0" opacity="0.9"/>
+        <circle cx="250" cy="10" r="1.5" fill="#E8D9B0" opacity="0.7"/>
+        <circle cx="320" cy="35" r="1" fill="#E8D9B0" opacity="0.5"/>
+        <circle cx="370" cy="20" r="1" fill="#E8D9B0" opacity="0.8"/>
+        <circle cx="70" cy="55" r="1" fill="#4A9EC8" opacity="0.6"/>
+        <circle cx="300" cy="50" r="1" fill="#4A9EC8" opacity="0.8"/>
+
+        <!-- Desert ground -->
+        <path d="M0 280 Q100 265 200 270 Q300 275 400 260 L400 420 L0 420Z" fill="#1A1208"/>
+        <path d="M0 295 Q80 280 180 285 Q280 290 400 275 L400 420 L0 420Z" fill="#141008"/>
+
+        <!-- Sand dunes -->
+        <ellipse cx="60" cy="300" rx="80" ry="20" fill="#2A1F0E" opacity="0.8"/>
+        <ellipse cx="340" cy="290" rx="90" ry="22" fill="#2A1F0E" opacity="0.6"/>
+
+        <!-- Background mountain -->
+        <path d="M130 180 L200 80 L270 180Z" fill="#0F0D0A"/>
+        <path d="M160 180 L200 90 L240 180Z" fill="#141008"/>
+
+        <!-- City silhouette - buildings -->
+        <!-- Adobe building left -->
+        <rect x="20" y="230" width="55" height="70" rx="2" fill="#241A10"/>
+        <rect x="25" y="220" width="45" height="20" rx="1" fill="#1E1510"/>
+        <!-- Pipe on building -->
+        <rect x="55" y="205" width="8" height="35" fill="#3A2A18"/>
+        <ellipse cx="59" cy="205" rx="5" ry="3" fill="#4A3520"/>
+        <!-- Steam from pipe -->
+        <ellipse cx="59" cy="195" rx="8" ry="5" fill="#C4B89A" opacity="0.12"/>
+        <ellipse cx="62" cy="183" rx="10" ry="6" fill="#C4B89A" opacity="0.08"/>
+
+        <!-- Central tower (main landmark) -->
+        <rect x="160" y="140" width="80" height="150" rx="2" fill="#1E1610"/>
+        <rect x="170" y="125" width="60" height="25" rx="2" fill="#251C12"/>
+        <polygon points="190,90 200,60 210,90" fill="#3A2A18"/>
+        <!-- Tower details: gears -->
+        <circle cx="200" cy="170" r="20" fill="none" stroke="#C9961A" stroke-width="1.5" opacity="0.4"/>
+        <circle cx="200" cy="170" r="10" fill="#1E1610" stroke="#C9961A" stroke-width="1" opacity="0.4"/>
+        <line x1="200" y1="150" x2="200" y2="190" stroke="#C9961A" stroke-width="1" opacity="0.3"/>
+        <line x1="180" y1="170" x2="220" y2="170" stroke="#C9961A" stroke-width="1" opacity="0.3"/>
+        <!-- Tower pipes -->
+        <rect x="148" y="160" width="6" height="40" fill="#2A2018"/>
+        <rect x="246" y="155" width="6" height="45" fill="#2A2018"/>
+        <!-- Windows -->
+        <rect x="175" y="200" width="15" height="20" rx="1" fill="#1E4A6E" opacity="0.5"/>
+        <rect x="210" y="200" width="15" height="20" rx="1" fill="#1E4A6E" opacity="0.4"/>
+        <rect x="178" y="240" width="10" height="15" rx="1" fill="#4A9EC8" opacity="0.25"/>
+        <rect x="212" y="240" width="10" height="15" rx="1" fill="#4A9EC8" opacity="0.25"/>
+
+        <!-- Right building -->
+        <rect x="310" y="215" width="70" height="85" rx="2" fill="#1E1610"/>
+        <rect x="315" y="205" width="60" height="15" rx="1" fill="#241C10"/>
+        <!-- Pipe cluster -->
+        <rect x="330" y="190" width="5" height="25" fill="#3A2A18"/>
+        <rect x="340" y="186" width="5" height="29" fill="#3A2A18"/>
+        <rect x="350" y="192" width="5" height="23" fill="#3A2A18"/>
+        <!-- Steam wisps -->
+        <ellipse cx="335" cy="186" rx="6" ry="4" fill="#C4B89A" opacity="0.1"/>
+        <ellipse cx="345" cy="180" rx="8" ry="5" fill="#C4B89A" opacity="0.08"/>
+
+        <!-- Train track -->
+        <line x1="0" y1="315" x2="400" y2="305" stroke="#3A2A18" stroke-width="3"/>
+        <line x1="0" y1="320" x2="400" y2="310" stroke="#3A2A18" stroke-width="3"/>
+        <!-- Ties -->
+        <line x1="30" y1="312" x2="30" y2="323" stroke="#2A1E10" stroke-width="2"/>
+        <line x1="70" y1="310" x2="70" y2="321" stroke="#2A1E10" stroke-width="2"/>
+        <line x1="110" y1="309" x2="110" y2="320" stroke="#2A1E10" stroke-width="2"/>
+
+        <!-- Blue vapor glow underground -->
+        <ellipse cx="200" cy="390" rx="120" ry="40" fill="url(#glowBlue)"/>
+        <!-- Vapor cracks in ground -->
+        <path d="M150 340 Q170 360 160 380" stroke="#4A9EC8" stroke-width="1" fill="none" opacity="0.35"/>
+        <path d="M220 345 Q240 365 230 385" stroke="#4A9EC8" stroke-width="1" fill="none" opacity="0.3"/>
+        <path d="M185 350 Q190 370 185 390" stroke="#7ECDE8" stroke-width="0.8" fill="none" opacity="0.4"/>
+
+        <!-- Gold glow at top of tower -->
+        <ellipse cx="200" cy="65" rx="25" ry="15" fill="url(#glowGold)"/>
+
+        <!-- Frame decoration -->
+        <rect x="0" y="0" width="400" height="420" fill="none" stroke="#C9961A" stroke-width="0.5" opacity="0.3"/>
+        <rect x="6" y="6" width="388" height="408" fill="none" stroke="#C9961A" stroke-width="0.5" opacity="0.15"/>
+
+        <!-- Corner ornaments -->
+        <path d="M0 0 L20 0 M0 0 L0 20" stroke="#C9961A" stroke-width="1.5" fill="none" opacity="0.6"/>
+        <path d="M400 0 L380 0 M400 0 L400 20" stroke="#C9961A" stroke-width="1.5" fill="none" opacity="0.6"/>
+        <path d="M0 420 L20 420 M0 420 L0 400" stroke="#C9961A" stroke-width="1.5" fill="none" opacity="0.6"/>
+        <path d="M400 420 L380 420 M400 420 L400 400" stroke="#C9961A" stroke-width="1.5" fill="none" opacity="0.6"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section class="features-section" id="mecanicas">
+  <div class="section-header">
+    <span class="section-label">Mecánicas</span>
+    <h2 class="section-title">Lo que te espera</h2>
+    <div class="section-line">
+      <div class="section-line-bar"></div>
+      <div class="divider-gem"></div>
+      <div class="section-line-bar"></div>
+    </div>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 4L28 14H38L30 20L33 30L24 24L15 30L18 20L10 14H20L24 4Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        <circle cx="24" cy="18" r="4" fill="currentColor" opacity="0.3"/>
+      </svg>
+      <div class="feature-title">Combate Steampunk</div>
+      <p class="feature-text">Maneja el fusil-lanza de vapor de Abaroa con precisión táctica. Cada disparo consume reservas de vapor que debes gestionar inteligentemente en el calor de la batalla.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M24 8V12M24 36V40M8 24H12M36 24H40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="24" cy="24" r="6" fill="currentColor" opacity="0.25"/>
+        <path d="M18 18L24 24L30 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div class="feature-title">Red Subterránea</div>
+      <p class="feature-text">Explora los túneles de tecnología antigua bajo Calama. Descifra mecanismos de otra época para desbloquear el poder del Vapor Azul y detener la superarma enemiga.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="16" width="32" height="24" rx="2" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M16 16V12C16 9.79 17.79 8 20 8H28C30.21 8 32 9.79 32 12V16" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="24" cy="28" r="4" fill="currentColor" opacity="0.3"/>
+        <path d="M24 28L24 34" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div class="feature-title">Sabotaje de Autómatas</div>
+      <p class="feature-text">Los soldados mecánicos del invasor tienen puntos débiles. Estudia sus patrones, infiltra sus filas y desactiva las máquinas de guerra desde adentro.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 4C12.95 4 4 12.95 4 24C4 35.05 12.95 44 24 44C35.05 44 44 35.05 44 24C44 12.95 35.05 4 24 4Z" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M14 24C14 18.48 18.48 14 24 14M24 34C29.52 34 34 29.52 34 24" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <circle cx="24" cy="24" r="4" fill="currentColor" opacity="0.4"/>
+      </svg>
+      <div class="feature-title">Rescate de Civiles</div>
+      <p class="feature-text">La misión no es solo sobrevivir. Cada boliviano que logres evacuar antes del ataque final es una victoria. El legado de Abaroa se mide en vidas, no en batallas.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 38L14 28L22 32L30 20L38 26L42 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <rect x="10" y="34" width="8" height="8" fill="currentColor" opacity="0.2"/>
+        <rect x="26" y="26" width="8" height="8" fill="currentColor" opacity="0.2"/>
+      </svg>
+      <div class="feature-title">Gestión de Recursos</div>
+      <p class="feature-text">El vapor es vida. Administra los depósitos de Vapor Azul para alimentar tus armas, reparar maquinaria aliada y mantener el tren blindado en movimiento.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 6L28 16H38L30 22L33 32L24 26L15 32L18 22L10 16H20L24 6Z" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M24 18L25.5 22H30L26.5 24.5L27.5 28L24 26L20.5 28L21.5 24.5L18 22H22.5L24 18Z" fill="currentColor" opacity="0.6"/>
+      </svg>
+      <div class="feature-title">Historia Branching</div>
+      <p class="feature-text">Las decisiones de Abaroa tienen consecuencias reales. ¿Proteger a los civiles o destruir la superarma? El destino del litoral cambia según tu estrategia.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CHARACTER SECTION -->
+<section class="character-section" id="personaje">
+  <div class="section-header">
+    <span class="section-label">El Guardián</span>
+    <h2 class="section-title">Eduardo Abaroa</h2>
+    <div class="section-line">
+      <div class="section-line-bar"></div>
+      <div class="divider-gem"></div>
+      <div class="section-line-bar"></div>
+    </div>
+  </div>
+
+  <div class="character-inner">
+    <div class="character-portrait">
+      <div class="portrait-frame">
+        <div class="portrait-corner tl"></div>
+        <div class="portrait-corner tr"></div>
+        <div class="portrait-corner bl"></div>
+        <div class="portrait-corner br"></div>
+        <!-- Portrait SVG illustration -->
+        <svg viewBox="0 0 360 460" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="heroGlow" cx="50%" cy="35%" r="50%">
+              <stop offset="0%" stop-color="#C9961A" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#0D0A08" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="blueGlow2" cx="50%" cy="80%" r="50%">
+              <stop offset="0%" stop-color="#1E4A6E" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#0D0A08" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="360" height="460" fill="#0F0C08"/>
+          <ellipse cx="180" cy="160" rx="200" ry="200" fill="url(#heroGlow)"/>
+          <ellipse cx="180" cy="400" rx="180" ry="100" fill="url(#blueGlow2)"/>
+
+          <!-- Desert ground -->
+          <path d="M0 350 Q90 330 180 340 Q270 350 360 330 L360 460 L0 460Z" fill="#1A1208"/>
+
+          <!-- Figure body - cape -->
+          <path d="M180 200 L100 340 Q85 380 90 420 L270 420 Q275 380 260 340 L180 200Z" fill="#2A1E12"/>
+          <!-- Cape highlights - fold lines -->
+          <path d="M180 210 Q150 270 140 340 Q135 370 140 400" stroke="#3A2A18" stroke-width="1" fill="none" opacity="0.6"/>
+          <path d="M180 215 Q210 275 220 345 Q225 375 220 405" stroke="#3A2A18" stroke-width="1" fill="none" opacity="0.5"/>
+          <!-- Cape edge worn -->
+          <path d="M100 340 Q90 380 92 420" stroke="#241810" stroke-width="2" fill="none"/>
+          <path d="M260 340 Q270 380 268 420" stroke="#241810" stroke-width="2" fill="none"/>
+
+          <!-- Metal belt/chest rig -->
+          <rect x="148" y="250" width="64" height="12" rx="2" fill="#4A3520"/>
+          <rect x="162" y="255" width="36" height="6" rx="1" fill="#5A4028"/>
+          <!-- Belt buckle - gear style -->
+          <circle cx="180" cy="258" r="8" fill="none" stroke="#C9961A" stroke-width="1.5" opacity="0.7"/>
+          <circle cx="180" cy="258" r="4" fill="#C9961A" opacity="0.5"/>
+
+          <!-- Arm holding weapon - RIGHT -->
+          <path d="M260 270 Q295 285 310 320 Q315 340 305 360" stroke="#241A10" stroke-width="20" stroke-linecap="round" fill="none"/>
+          <!-- Mechanical arm piece -->
+          <rect x="278" y="285" width="20" height="40" rx="4" fill="#3A2820" transform="rotate(25,288,305)"/>
+          <circle cx="288" cy="300" r="6" fill="none" stroke="#C9961A" stroke-width="1" opacity="0.6"/>
+
+          <!-- WEAPON: steam lance-rifle -->
+          <path d="M305 360 Q320 340 340 300 Q350 280 345 260" stroke="#2A1E14" stroke-width="10" stroke-linecap="round" fill="none"/>
+          <!-- Barrel details -->
+          <path d="M305 360 Q320 340 340 300" stroke="#4A3520" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <!-- Steam chambers on weapon -->
+          <ellipse cx="330" cy="315" rx="10" ry="6" fill="#3A2818" transform="rotate(-30,330,315)"/>
+          <rect x="335" y="305" width="5" height="20" rx="2" fill="#4A3520" transform="rotate(-30,337,315)"/>
+          <!-- Vapor glow on weapon -->
+          <ellipse cx="345" cy="262" rx="8" ry="8" fill="#4A9EC8" opacity="0.25"/>
+          <ellipse cx="345" cy="262" rx="4" ry="4" fill="#7ECDE8" opacity="0.4"/>
+          <!-- Bayonet/lance tip -->
+          <path d="M342 268 L348 248 L352 268Z" fill="#C4B89A" opacity="0.7"/>
+
+          <!-- Left arm mechanical glove -->
+          <path d="M100 270 Q68 285 55 320 Q50 340 60 360" stroke="#241A10" stroke-width="20" stroke-linecap="round" fill="none"/>
+          <!-- Mechanical glove detail -->
+          <rect x="50" y="335" width="25" height="30" rx="4" fill="#3A2418"/>
+          <line x1="55" y1="345" x2="70" y2="345" stroke="#C9961A" stroke-width="0.8" opacity="0.5"/>
+          <line x1="55" y1="352" x2="70" y2="352" stroke="#C9961A" stroke-width="0.8" opacity="0.5"/>
+          <line x1="55" y1="359" x2="70" y2="359" stroke="#C9961A" stroke-width="0.8" opacity="0.5"/>
+
+          <!-- HEAD -->
+          <!-- Neck -->
+          <rect x="168" y="165" width="24" height="40" rx="4" fill="#3A2418"/>
+          <!-- Head shape -->
+          <ellipse cx="180" cy="140" rx="38" ry="44" fill="#3A2418"/>
+          <!-- Hat - military style with goggles -->
+          <rect x="145" y="98" width="70" height="30" rx="4" fill="#241A10"/>
+          <rect x="140" y="95" width="80" height="12" rx="2" fill="#1E1610"/>
+          <rect x="148" y="82" width="64" height="20" rx="3" fill="#2A1E12"/>
+          <!-- Hat band with gear detail -->
+          <line x1="148" y1="97" x2="212" y2="97" stroke="#C9961A" stroke-width="1" opacity="0.4"/>
+          <!-- Goggles on hat -->
+          <circle cx="165" cy="91" r="8" fill="none" stroke="#C9961A" stroke-width="1.5" opacity="0.7"/>
+          <circle cx="165" cy="91" r="5" fill="#1E3A5A" opacity="0.8"/>
+          <circle cx="195" cy="91" r="8" fill="none" stroke="#C9961A" stroke-width="1.5" opacity="0.7"/>
+          <circle cx="195" cy="91" r="5" fill="#1E3A5A" opacity="0.8"/>
+          <line x1="173" y1="91" x2="187" y2="91" stroke="#C9961A" stroke-width="1" opacity="0.6"/>
+
+          <!-- Face features - angular, determined -->
+          <!-- Brow -->
+          <path d="M158 140 Q168 136 178 138" stroke="#1E1208" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M182 138 Q192 136 202 140" stroke="#1E1208" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <!-- Eyes - intense, narrow -->
+          <ellipse cx="166" cy="145" rx="9" ry="5" fill="#241810"/>
+          <ellipse cx="194" cy="145" rx="9" ry="5" fill="#241810"/>
+          <ellipse cx="166" cy="145" rx="5" ry="4" fill="#1E3028"/>
+          <ellipse cx="194" cy="145" rx="5" ry="4" fill="#1E3028"/>
+          <circle cx="167" cy="144" r="2" fill="#0D0A08"/>
+          <circle cx="195" cy="144" r="2" fill="#0D0A08"/>
+          <!-- Eye glint -->
+          <circle cx="169" cy="143" r="1" fill="#7ECDE8" opacity="0.6"/>
+          <circle cx="197" cy="143" r="1" fill="#7ECDE8" opacity="0.6"/>
+          <!-- Nose -->
+          <path d="M180 148 Q176 158 174 162 Q178 165 182 165 Q186 162 186 162 Q184 158 180 148Z" fill="#2E1C10"/>
+          <!-- Mustache / beard stubble area -->
+          <path d="M170 165 Q180 170 190 165" fill="#241810"/>
+          <!-- Beard/stubble -->
+          <rect x="166" y="163" width="28" height="14" rx="3" fill="#2A1A0E" opacity="0.7"/>
+          <!-- Jaw/chin -->
+          <path d="M150 155 Q148 175 180 185 Q212 175 210 155" fill="#3A2418"/>
+
+          <!-- Scarf/collar -->
+          <path d="M148 182 Q148 195 168 198 Q180 200 192 198 Q212 195 212 182" fill="#2A1E14" stroke="#3A2A1A" stroke-width="0.5"/>
+
+          <!-- Vapor glow - blue tint on figure from below -->
+          <ellipse cx="180" cy="430" rx="100" ry="35" fill="#1E4A6E" opacity="0.15"/>
+
+          <!-- Ground cracks with blue vapor -->
+          <path d="M150 360 Q155 375 148 400" stroke="#4A9EC8" stroke-width="0.8" fill="none" opacity="0.5"/>
+          <path d="M200 365 Q205 380 200 405" stroke="#4A9EC8" stroke-width="0.8" fill="none" opacity="0.4"/>
+
+          <!-- Atmospheric dust particles -->
+          <circle cx="60" cy="200" r="1.5" fill="#C4B89A" opacity="0.15"/>
+          <circle cx="295" cy="220" r="2" fill="#C4B89A" opacity="0.12"/>
+          <circle cx="40" cy="300" r="1.5" fill="#C4B89A" opacity="0.1"/>
+          <circle cx="320" cy="180" r="1" fill="#C4B89A" opacity="0.18"/>
+        </svg>
+      </div>
+
+      <div class="character-stats">
+        <div class="stat-item">
+          <div class="stat-label">Rango</div>
+          <div class="stat-value">Guardián del Desierto</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Especialidad</div>
+          <div class="stat-value">Ingeniería de Vapor</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Arma</div>
+          <div class="stat-value">Fusil-Lanza de Vapor</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Misión</div>
+          <div class="stat-value">Defender Calama</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="character-info">
+      <h3>El Último Defensor</h3>
+      <div class="character-role">Ingeniero · Explorador · Guardián</div>
+
+      <blockquote class="character-quote">
+        "Traicionar a la patria no. Rendirse tampoco. Eso no lo haré aunque me cueste la vida."
+      </blockquote>
+
+      <div class="character-bio">
+        <p>Eduardo Abaroa no eligió ser un héroe. Durante años mantuvo las máquinas de Calama en funcionamiento, estudió los mecanismos de los antiguos y protegió a su comunidad lejos de la política de los salones.</p>
+        <p>Cuando el ejército invasor llegó con sus autómatas de guerra y soldados blindados, Abaroa tomó su capa, sus guantes de mecánico y el fusil-lanza que él mismo construyó. No porque quisiera la gloria, sino porque nadie más lo haría.</p>
+        <p>Lo que descubrirá debajo de Calama cambiará su visión del conflicto, de la historia y del legado que su pueblo dejará al mundo.</p>
+      </div>
+
+      <div class="equipment-list">
+        <div class="equipment-item">
+          <svg class="equipment-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 12h18M3 12l4-4m-4 4l4 4M21 12l-4-4m4 4l-4 4"/>
+          </svg>
+          <div>
+            <div class="equipment-name">Fusil-Lanza de Vapor</div>
+            <div class="equipment-desc">Rifle, lanza y herramienta mecánica en uno. Construido a mano por el propio Abaroa.</div>
+          </div>
+        </div>
+        <div class="equipment-item">
+          <svg class="equipment-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2L12 12M12 12L8 8M12 12L16 8M4 20h16M6 20L6 15a6 6 0 0 1 12 0v5"/>
+          </svg>
+          <div>
+            <div class="equipment-name">Capa Andina Reforzada</div>
+            <div class="equipment-desc">Tejido andino con láminas de cobre cosidas. Protección contra esquirlas y chispas eléctricas.</div>
+          </div>
+        </div>
+        <div class="equipment-item">
+          <svg class="equipment-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 3"/>
+          </svg>
+          <div>
+            <div class="equipment-name">Guantes de Mecánico</div>
+            <div class="equipment-desc">Permiten manipular tecnología de Vapor Azul sin exponerse a su energía inestable.</div>
+          </div>
+        </div>
+        <div class="equipment-item">
+          <svg class="equipment-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 4C8 4 4 8 4 12s4 8 8 8 8-4 8-8-4-8-8-8z"/><path d="M12 8v4l2 2"/>
+          </svg>
+          <div>
+            <div class="equipment-name">Hoja Energética Artesanal</div>
+            <div class="equipment-desc">Una espada corta recargada con cristales de Vapor Azul. Más herramienta que arma.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORLD SECTION -->
+<section class="world-section" id="mundo">
+  <div class="section-header">
+    <span class="section-label">Lugares</span>
+    <h2 class="section-title">El Desierto Mecánico</h2>
+    <div class="section-line">
+      <div class="section-line-bar"></div>
+      <div class="divider-gem"></div>
+      <div class="section-line-bar"></div>
+    </div>
+  </div>
+
+  <div class="world-panels">
+    <div class="world-panel">
+      <span class="world-panel-number">I</span>
+      <svg class="world-panel-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="20" width="32" height="24" rx="2" stroke="#C9961A" stroke-width="1.5"/>
+        <path d="M16 20V16C16 11.58 19.58 8 24 8C28.42 8 32 11.58 32 16V20" stroke="#C9961A" stroke-width="1.5"/>
+        <path d="M20 28H28M24 28V36" stroke="#C9961A" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <h3>Calama</h3>
+      <p>Ciudad de adobe reforzada con metal. Tuberías de vapor que serpentean entre casas, lámparas de cobre que nunca se apagan, y en su subsuelo, una tecnología que nadie debería haber encontrado.</p>
+    </div>
+    <div class="world-panel">
+      <span class="world-panel-number">II</span>
+      <svg class="world-panel-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 8L28 20H40L30 27L34 40L24 33L14 40L18 27L8 20H20L24 8Z" stroke="#4A9EC8" stroke-width="1.5" fill="none"/>
+        <circle cx="24" cy="24" r="6" fill="#4A9EC8" opacity="0.2" stroke="#4A9EC8" stroke-width="1"/>
+      </svg>
+      <h3>Venas de Vapor Azul</h3>
+      <p>Una red de filones de energía antigua corre bajo el desierto. Donde emerge, el suelo brilla en la oscuridad y las tormentas de arena cargan chispas eléctricas que distorsionan las brújulas.</p>
+    </div>
+    <div class="world-panel">
+      <span class="world-panel-number">III</span>
+      <svg class="world-panel-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="16" stroke="#B5612A" stroke-width="1.5"/>
+        <path d="M24 8V12M24 36V40M8 24H12M36 24H40M13.16 13.16L16 16M32 32L34.84 34.84M13.16 34.84L16 32M32 16L34.84 13.16" stroke="#B5612A" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="24" cy="24" r="6" fill="#B5612A" opacity="0.3"/>
+      </svg>
+      <h3>El Corazón del Litoral</h3>
+      <p>Una máquina gigante enterrada bajo Calama. Nadie sabe quién la construyó ni cuándo. Activada, es capaz de secar ríos enteros, destruir pueblos y controlar el acceso al océano para siempre.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LORE SCROLL -->
+<section class="lore-section">
+  <div class="lore-scroll">
+    <div class="lore-title">— Últimas palabras conocidas de Abaroa —</div>
+    <p class="lore-text">
+      "Le preguntaron si se rendiría. Dijo que no. Le explicaron que estaba solo. Dijo que sabía. Le prometieron que lo recordarían como un loco. Sonrió.<br><br>
+      Luego volvió su vista al desierto, apretó el fusil de vapor, y caminó hacia adelante."
+    </p>
+    <p class="lore-attribution">— Crónicas del Litoral, 1879 —</p>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section" id="notificar">
+  <div class="cta-inner">
+    <h2 class="cta-title">El Litoral<br>no se olvida</h2>
+    <p class="cta-text">Recibe las primeras noticias del desarrollo, acceso anticipado a la demo y contenido exclusivo del universo steampunk boliviano.</p>
+    <div class="notify-form">
+      <input type="email" class="notify-input" placeholder="tu@correo.com"/>
+      <button class="notify-btn">Notificarme</button>
+    </div>
+    <p style="font-size:12px; color: rgba(196,184,154,0.35); margin-top:16px; letter-spacing:0.05em;">
+      Sin spam. Solo cuando haya novedades reales.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Avaroa</div>
+  <p class="footer-text">© 2025 · Proyecto independiente · Bolivia Steampunk Universe</p>
+</footer>
+
+</body>
+</html>
